@@ -7,6 +7,7 @@ public class ClientDto {
 	    private String name;
 	    private String surname;
 	    private String passportNr;
+	    
 		public Long getId() {
 			return id;
 		}
@@ -37,9 +38,24 @@ public class ClientDto {
 			this.surname = surname;
 			this.passportNr = passportNr;
 		}
+		
+		public ClientDto(Long id, String name, String surname, String passportNr) {
+			super();
+			this.id = id;
+			this.name = name;
+			this.surname = surname;
+			this.passportNr = passportNr;
+		}
 		public ClientDto() {
 			super();
 		}
+		@Override
+		public String toString() {
+			return "ClientDto [id=" + id + ", name=" + name + ", surname=" + surname + ", passportNr=" + passportNr
+					+ "]";
+		}
+	
+		
 	    
 	    
 }

@@ -25,15 +25,17 @@
 	crossorigin="anonymous"></script>
 
 <body>
-	<form th:action="@{/addclient}" method="post"
+	<div class="container formBox">
+		<h3>TRAVEL AGENCY CLIENT'S MANAGER</h3>
+	</div>
+	<form action="#" th:action="@{/addclient}" method="post"
 		th:object="${clientToCreate}">
 		<div class="container formBox">
-			<h3>Client manager</h3>
+			<h3>ADD CLIENT</h3>
 			<div class="d-flex flex-row justify-content-center">
 				<div class="form-group col-md-8 mb-20">
 					<label for="name">Name: </label> <input type="text" id="name"
-						class="form-control"
-						th:field="*{name}" th:required="required">
+						class="form-control" th:field="*{name}" th:required="required">
 				</div>
 			</div>
 			<div class="d-flex flex-row justify-content-center ">
@@ -51,9 +53,45 @@
 				</div>
 			</div>
 			<div class="d-flex flex-row justify-content-center mt-20 mb-20">
-				<button type="submit" class="btn btn-primary">Save</button>
+				<button type="submit" class="btn btn-info">Save</button>
 			</div>
 		</div>
-	</form> 
+	</form>
+
+	<div class="container formBox justify-content-center" th:switch="${allClients}">
+		<h2 th:case="null">No clients in database!</h2>
+		<div th:case="*">
+			<h3 >ALL CLIENTS</h3>
+			<table class="table table-bordered table-hover mt-20">
+				<thead class="thead-dark">
+					<tr>
+						<th>NAME</th>
+						<th>SURNAME</th>
+						<th>PASSPORT NUMBER</th>
+						<th>EDIT</th>
+						<th>DELETE</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="client : ${allClients}">
+						<td th:text="${client.name}"></td>
+						<td th:text="${client.surname}"></td>
+						<td th:text="${client.passportNr}"></td>
+						<td></td>
+						<!-- 	<td><a th:href="@{/edit/{id}(id=${client.id})}">Edit</a></td> -->
+						<!-- 		<td><a th:href="@{/delete/{id}(id=${client.id})}">Delete</a></td> -->
+						<td><form th:action="@{/delete}" th:object="${clientToDelete}" method="post">
+                    <input type="hidden" name="id" th:value="${client.id}">
+                    <input type="hidden" name="name" th:value="${client.name}">
+                    <input type="hidden" name="surname" th:value="${client.surname}">
+                    <input type="hidden" name="passportNr" th:value="${client.passportNr}">
+                    <button type="submit"class="btn btn-outline-info">Delete</button>
+             		  </form></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
 </body>
 </html>

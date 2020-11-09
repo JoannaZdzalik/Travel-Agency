@@ -6,8 +6,8 @@ import zdz.joanna.travelagency.dto.ClientDto;
 public interface ClientServiceInterface {
 	
 	void addClient(ClientDto clientDto);
-//	void removeClient(ClientDto clientDto);
+	void deleteClient(ClientDto clientDto);
+//	void deleteClientById(Long id);
 //	void updateClient (ClientDto clientDto);
 	List<ClientDto> getAllClients();
-	
 }
