@@ -40,7 +40,6 @@ public class ClientService implements ClientServiceInterface {
 		
 	}
 
-	  
 //	 void updateClient (ClientDto clientDto) {
 	 // Client updatedClient = mapper.map(clientDto, Client.Class)
 	 // clientRepository.save(updatedClient);

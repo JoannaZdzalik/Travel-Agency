@@ -8,6 +8,7 @@ public class ClientDto {
 	    private String surname;
 	    private String passportNr;
 	    
+	    
 		public Long getId() {
 			return id;
 		}

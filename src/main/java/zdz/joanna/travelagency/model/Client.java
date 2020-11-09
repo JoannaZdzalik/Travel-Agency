@@ -1,9 +1,9 @@
 package zdz.joanna.travelagency.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 import java.io.Serializable;
+import java.util.List;
 
 @SuppressWarnings("serial")
 @Entity
@@ -21,11 +21,11 @@ public class Client implements Serializable {
 	@Column(nullable = false)
 	private String surname;
 
-	@Column(name = "passportNr", nullable = false)
+	@Column(nullable = false)
 	private String passportNr;
 
-//	    @OneToMany(mappedBy = "client")
-//	    private List<Reservation> reservations;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
+	private List<Reservation> reservations;
 
 	public Client(String name, String surname, String passportNr) {
 		super();
@@ -62,13 +62,23 @@ public class Client implements Serializable {
 		this.passportNr = passportNr;
 	}
 
+	public List<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
+	}
+
 	public Client() {
 		super();
 	}
 
 	@Override
 	public String toString() {
-		return "Client{" + "name='" + name + '\'' + ", surname='" + surname + '\'' + ", passportNr='" + passportNr
-				+ '\'' + '}';
+		return "Client [id=" + id + ", name=" + name + ", surname=" + surname + ", passportNr=" + passportNr
+				+ ", reservations=" + reservations + "]";
 	}
+	
+	
 }
