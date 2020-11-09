@@ -1,0 +1,25 @@
+body {
+background-color:#f3f3f3;
+}
+
+h3 {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.formBox {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: #D3D3D3  solid;
+    background-color: #f9f9f9;
+
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+
+
+
