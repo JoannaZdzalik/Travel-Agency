@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "reservations")
+@Table(name = "reservations", uniqueConstraints = {@UniqueConstraint(columnNames = {"id_client", "id_trip"})})
 public class Reservation implements Serializable {
 
 	@Id

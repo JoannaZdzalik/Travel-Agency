@@ -21,7 +21,7 @@ public class Client implements Serializable {
 	@Column(nullable = false)
 	private String surname;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String passportNr;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "client")

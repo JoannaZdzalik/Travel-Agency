@@ -11,6 +11,7 @@ public class Destination implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
+	@Column(nullable= false)
 	private String name;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "destination")

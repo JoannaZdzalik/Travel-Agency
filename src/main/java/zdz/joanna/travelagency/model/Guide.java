@@ -14,7 +14,7 @@ public class Guide implements Serializable {
 	@Column
 	private Long id;
 	
-	@Column
+	@Column(nullable = false)
 	private String name;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "guide")

@@ -21,9 +21,17 @@ public class ClientService implements ClientServiceInterface {
 	@Autowired
 	private ClientRepository clientRepository;
 
-	public void addClient(ClientDto clientDto) {
-		Client client = mapper.map(clientDto, Client.class);
-		clientRepository.save(client);
+	public boolean addClient(ClientDto clientDto) {
+		if (clientDto != null && isValid(clientDto)) {
+			Client client = mapper.map(clientDto, Client.class);
+			try {
+				clientRepository.save(client);
+			} catch (Exception e) {
+				return false;
+			}
+			return true;
+		}
+		return false;
 	}
 
 	public List<ClientDto> getAllClients() {
@@ -31,18 +39,23 @@ public class ClientService implements ClientServiceInterface {
 		System.out.println("clients : " + clients);
 		return clients.stream().map(c -> mapper.map(c, ClientDto.class)).collect(Collectors.toList());
 	}
-	
-	 public void deleteClient(ClientDto clientDto) {
-			System.out.println("clientDto to be romoved : " + clientDto);
-	    	Client cl = clientRepository.findById(clientDto.getId()).orElseThrow(()-> new IllegalArgumentException("Invalid client Id:" + clientDto.getId()));
-	    	System.out.println("client to be romoved : " + cl);
-	    	clientRepository.delete(cl);
-		
+
+	public void deleteClient(ClientDto clientDto) {
+		System.out.println("clientDto to be romoved : " + clientDto);
+		Client cl = clientRepository.findById(clientDto.getId())
+				.orElseThrow(() -> new IllegalArgumentException("Invalid client Id:" + clientDto.getId()));
+		System.out.println("client to be romoved : " + cl);
+		clientRepository.delete(cl);
+	}
+
+	public boolean isValid(ClientDto clientDto) {
+
+		return true;
 	}
 
 //	 void updateClient (ClientDto clientDto) {
-	 // Client updatedClient = mapper.map(clientDto, Client.Class)
-	 // clientRepository.save(updatedClient);
+	// Client updatedClient = mapper.map(clientDto, Client.Class)
+	// clientRepository.save(updatedClient);
 //	})
 
 }

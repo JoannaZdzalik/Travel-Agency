@@ -21,16 +21,16 @@ public class Trip implements Serializable {
 	@JoinColumn(name = "id_destination")
 	private Destination destination;
 	
-	@Column(name = "departureDate", nullable = false)
+	@Column(name = "departure_date", nullable = false)
 	private LocalDate departureDate;
 	
-	@Column(name = "returnDate", nullable = false)
+	@Column(name = "return_date", nullable = false)
 	private LocalDate returnDate;
 	
-	@Column(name = "suggestedPrice", nullable = false)
+	@Column(name = "suggested_price", nullable = false)
 	private BigDecimal suggestedPrice = new BigDecimal("1200.5");
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	@JoinColumn(name = "id_guide")
 	private Guide guide;
 
@@ -46,7 +46,6 @@ public class Trip implements Serializable {
 		this.suggestedPrice = suggestedPrice;
 		this.guide = guide;
 	}
-	
 	
 	public Trip() {
 		super();

@@ -32,8 +32,6 @@ public class ClientController {
 	
     @PostMapping("/delete")
     public String delete(@ModelAttribute("clientToDelete") ClientDto clientDto) {
-//    	Client cl = clientRepository.findById(clientDto.getId()).orElseThrow(()-> new IllegalArgumentException("Invalid client Id:" + clientDto.getId()));
-//    	clientRepository.delete(cl);
         clientService.deleteClient(clientDto);
         return "redirect:client";
     }
