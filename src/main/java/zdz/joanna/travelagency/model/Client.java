@@ -73,12 +73,5 @@ public class Client implements Serializable {
 	public Client() {
 		super();
 	}
-
-	@Override
-	public String toString() {
-		return "Client [id=" + id + ", name=" + name + ", surname=" + surname + ", passportNr=" + passportNr
-				+ ", reservations=" + reservations + "]";
-	}
-	
 	
 }
