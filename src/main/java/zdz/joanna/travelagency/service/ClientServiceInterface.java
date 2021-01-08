@@ -8,13 +8,13 @@ import zdz.joanna.travelagency.model.Client;
 
 public interface ClientServiceInterface {
 
-	boolean addClient(ClientDto clientDto);
+	String addClient(ClientDto clientDto);
 
 	boolean deleteClient(ClientDto clientDto);
 
 	List<ClientDto> getAllClients();
 
-	public boolean update(Client client);
+	public boolean update(ClientDto client);
 
 	public Optional<Client> getById(Long id);
 }

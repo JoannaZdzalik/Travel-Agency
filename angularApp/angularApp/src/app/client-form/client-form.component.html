@@ -5,25 +5,27 @@
     <div [hidden]="submitted" style="width: 400px;">  
       <form [formGroup]="formdata" (ngSubmit)="saveClient(formdata.value)">  
           <div class="form-group">  
-              <label for="name">Name</label>  
+              <label for="name">Name*</label>  
               <input type="text" class="form-control"  name="name" formControlName="name" 
                  data-placement="right" title="Enter Client Name" >  
-          </div>  
-    
+                
+          </div> 
+         
           <div class="form-group">  
-              <label for="name">Surname</label>  
+              <label for="surname">Surname*</label>  
               <input type="text" class="form-control" formControlName="surname" name="surname"  
                  data-placement="right" title="Enter client's surname">  
           </div>  
     
           <div class="form-group">  
-            <label for="name">Passport number</label>  
+            <label for="passportNr">Passport number*</label>  
             <input type="text" class="form-control" formControlName="passportNr"   name="passportNr" 
-               data-placement="right" title="Enter client's passport number">                    
-              </div>  
- 
-    
-          <button type="submit" class="btn btn-success">Submit</button>  
+               data-placement="right" title="Enter client's passport number">     
+               <small id="passwordHelpBlock" class="form-text text-muted">
+                *required fields.
+              </small>               
+              </div> 
+          <button [disabled]="!formdata.valid" type="submit" class="btn btn-success" >Submit</button>  
       </form>  
   </div>  
   </div>  

@@ -15,7 +15,7 @@ export class ClientService {
   constructor(private http:HttpClient) { }  
   
   getClientList(): Observable<any> {  
-    return this.http.get(this.baseUrl);  
+    return this.http.get(this.getUrl);  
   }  
 
   getData() {
@@ -25,6 +25,14 @@ export class ClientService {
   createClient(client: ClientDto) {  
     return this.http.post(this.addUrl, client);  
    // return this.http.post(`${this.baseUrl}`+'/addclient', client);  
+  }  
+
+  deleteClient(id: number): Observable<any> {  
+    return this.http.delete(`${this.baseUrl}/deleteclient/${id}`, { responseType: 'text' });  
+  } 
+
+  updateClient(id: number, value: any): Observable<Object> {  
+    return this.http.post(`${this.baseUrl}/update-student/${id}`, value);  
   }  
 
 

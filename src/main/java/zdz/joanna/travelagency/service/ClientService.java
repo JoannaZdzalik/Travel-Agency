@@ -22,17 +22,31 @@ public class ClientService implements ClientServiceInterface {
 	@Autowired
 	private ClientRepository clientRepository;
 
-	public boolean addClient(ClientDto clientDto) {
-		if (clientDto != null && isValid(clientDto)) {
+	public String addClient(ClientDto clientDto) {
+		if(clientDto == null) {
+			return "Bad request - client not specified";
+		}
+		if(!isPassportNrValid(clientDto)) {
+			return "This passport number already exists in db!";
+		}else if (clientDto.getName()== null || clientDto.getName().length()<2) {
+			return "Bad request - name not specified";
+		}
+		else if (clientDto.getSurname()== null || clientDto.getSurname().length()<2) {
+			return "Bad request - surname not specified";
+		}
+		else if (clientDto.getPassportNr()== null || clientDto.getPassportNr().length()<6) {
+			return "Bad request - passpoerNr not specified";
+		}
+		else if (isValid(clientDto)) {
 			Client client = mapper.map(clientDto, Client.class);
 			try {
 				clientRepository.save(client);
 			} catch (Exception e) {
-				return false;
+				return "Something went wrong!";
 			}
-			return true;
+			return "Client added sucessfully";
 		}
-		return false;
+		return "Something went wrong";
 	}
 
 	public List<ClientDto> getAllClients() {
@@ -53,14 +67,24 @@ public class ClientService implements ClientServiceInterface {
 		return false;
 	}
 
-	public boolean isValid(ClientDto clientDto) {
+	
+	public boolean isPassportNrValid(ClientDto clientDto) {
 		try {
 			passportNrExists(clientDto);
 		} catch (IllegalArgumentException e) {
-			System.err.println("This passport number already exists - not adding Client to db!");
+			
 			return false;
 		}
 		return true;
+	}
+	
+	public boolean isValid(ClientDto clientDto) {
+		return isPassportNrValid(clientDto) && clientDto.getName()!= null 
+				&& clientDto.getSurname()!= null 
+				&& clientDto.getPassportNr() !=null
+				&& clientDto.getName().length()>2
+				&& clientDto.getSurname().length()>2
+				&& clientDto.getPassportNr().length()>6;
 	}
 
 	public boolean passportNrExists(ClientDto clientDto) {
@@ -71,8 +95,9 @@ public class ClientService implements ClientServiceInterface {
 		return clientRepository.findById(id);
 	}
 	
-	public boolean update(Client client) {
+	public boolean update(ClientDto clientDto) {
 			try {
+				Client client = mapper.map(clientDto, Client.class);
 				clientRepository.save(client);
 			} catch (Exception e) {
 				return false;

@@ -32,5 +32,4 @@ public class SwaggerConfig {
 	                .licenseUrl("mylicense")
 	                .build();
 	    }
-
 }
