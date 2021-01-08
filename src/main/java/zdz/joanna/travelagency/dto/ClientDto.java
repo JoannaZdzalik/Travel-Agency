@@ -1,6 +1,5 @@
 package zdz.joanna.travelagency.dto;
 
-
 public class ClientDto {
 
 		private Long id;
@@ -55,6 +54,12 @@ public class ClientDto {
 			return "ClientDto [id=" + id + ", name=" + name + ", surname=" + surname + ", passportNr=" + passportNr
 					+ "]";
 		}
+		public ClientDto(Long id) {
+			super();
+			this.id = id;
+		}
+		
+		
 	
 		
 	    

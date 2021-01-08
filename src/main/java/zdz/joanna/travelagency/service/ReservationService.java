@@ -30,6 +30,7 @@ public class ReservationService {
 		return false;
 	}
 	
+	//when client negotiates the price
 	public boolean isValid(ReservationDto r) {
 		int result = r.getActualPrice().compareTo(r.getTrip().getSuggestedPrice());
 		if((result == 0 || result ==-1) && r!= null ) {

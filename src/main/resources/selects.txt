@@ -1,4 +1,4 @@
-//Który cel podró¿y zosta³ wybrany przez najwiêcej osób w danym roku - dopuszcza kilka rekordów
+//Ktory cel podrzy zostal wybrany przez najwiecej osob w danym roku - dopuszcza kilka rekordow
 select max(name) as name, count(name)as occurences  from destinations 
 inner join trips on trips.id_destination=destinations.id
 inner join reservations on reservations.id_trip=trips.id
@@ -6,7 +6,7 @@ where to_char(departure_date, 'YYYY-MM-DD') LIKE '2021%'
 group by name;
 
 
-//Który klient nie zamówi³ wycieczki w danym roku.
+//Ktory klient nie zamowil wycieczki w danym roku.
 SELECT name, surname from clients except
 SELECT name, surname from clients
 where id = any 
@@ -15,7 +15,7 @@ left join trips on reservations.id_trip = trips.id
 where to_char(departure_date, 'YYYY-MM-DD') LIKE '2019%')
 
 
-//Œredni¹ cenê oraz sumê ca³kowit¹, za któr¹ sprzedano dan¹ wycieczkê.
+//Srednia cena oraz suma caakowita, za ktora sprzedano dana wycieczke.
 //dla wszystkich wycieczek
 select id_trip, sum(actual_price), avg(actual_price) from reservations
 group by id_trip  
@@ -24,16 +24,17 @@ select sum(actual_price), avg(actual_price) from reservations
 where id_trip=1;
 
 
-//Który przewodnik wygenerowa³ najwiêkszy przychód, czyli kierowa³ wycieczki za najwiêksz¹ sumê w danym roku.
+//Ktory przewodnik wygenerowal najwiekszy przychod, czyli kierowal wycieczki za najwieksza sume w danym roku.
 select name from guides
 left join trips on guides.id=trips.id_guide
 left join reservations on reservations.id_trip=trips.id
+where to_char(departure_date, 'YYYY-MM-DD') LIKE '2021%'
 group by name
 order by sum(actual_price) desc limit 1
 
 
 
-//Który klient dosta³ najwiêkszy rabat (ró¿nica w cenie sugerowanej i transakcyjnej)
+//Ktory klient dostal najwiekszy rabat (roznica w cenie sugerowanej i transakcyjnej)
 select max(surname) as surname from clients 
 left join reservations on clients.id=reservations.id_client
 left join trips on trips.id=reservations.id_trip

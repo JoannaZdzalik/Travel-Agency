@@ -7,6 +7,7 @@ import zdz.joanna.travelagency.model.Client;
 import zdz.joanna.travelagency.repository.ClientRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -35,7 +36,7 @@ public class ClientService implements ClientServiceInterface {
 	}
 
 	public List<ClientDto> getAllClients() {
-		List<Client> clients = clientRepository.findAll();
+		List<Client> clients = clientRepository.findAllByOrderBySurname();
 		return clients.stream().map(c -> mapper.map(c, ClientDto.class)).collect(Collectors.toList());
 	}
 
@@ -53,13 +54,30 @@ public class ClientService implements ClientServiceInterface {
 	}
 
 	public boolean isValid(ClientDto clientDto) {
-
+		try {
+			passportNrExists(clientDto);
+		} catch (IllegalArgumentException e) {
+			System.err.println("This passport number already exists - not adding Client to db!");
+			return false;
+		}
 		return true;
 	}
 
-//	 void updateClient (ClientDto clientDto) {
-	// Client updatedClient = mapper.map(clientDto, Client.Class)
-	// clientRepository.save(updatedClient);
-//	})
+	public boolean passportNrExists(ClientDto clientDto) {
+		return clientRepository.countByPassportNr(clientDto.getPassportNr()) > 0;
+	}
+	
+	public Optional<Client> getById(Long id){
+		return clientRepository.findById(id);
+	}
+	
+	public boolean update(Client client) {
+			try {
+				clientRepository.save(client);
+			} catch (Exception e) {
+				return false;
+			}
+			return true;
+	}
 
 }

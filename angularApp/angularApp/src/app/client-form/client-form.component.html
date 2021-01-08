@@ -1,0 +1,66 @@
+
+<div class="row">  
+  <div class="col-sm-4"></div>  
+  <div class="col-sm-4" >  
+    <div [hidden]="submitted" style="width: 400px;">  
+      <form [formGroup]="formdata" (ngSubmit)="saveClient(formdata.value)">  
+          <div class="form-group">  
+              <label for="name">Name</label>  
+              <input type="text" class="form-control"  name="name" formControlName="name" 
+                 data-placement="right" title="Enter Client Name" >  
+          </div>  
+    
+          <div class="form-group">  
+              <label for="name">Surname</label>  
+              <input type="text" class="form-control" formControlName="surname" name="surname"  
+                 data-placement="right" title="Enter client's surname">  
+          </div>  
+    
+          <div class="form-group">  
+            <label for="name">Passport number</label>  
+            <input type="text" class="form-control" formControlName="passportNr"   name="passportNr" 
+               data-placement="right" title="Enter client's passport number">                    
+              </div>  
+ 
+    
+          <button type="submit" class="btn btn-success">Submit</button>  
+      </form>  
+  </div>  
+  </div>  
+  <div class="col-sm-4"></div>  
+</div>  
+<div class="row">  
+  <div class="col-sm-4"></div>  
+  <div class="col-sm-4">  
+      <div *ngIf="submitted">  
+         <h4>Client added succesfully</h4>  
+         <button (click)="addClientForm()" class='btn btn-primary'>Add another client</button>  
+      </div>        
+  </div>  
+  <div class="col-sm-4"></div>  
+</div>  
+<!-- <div class="card my-5">
+    <div class="card-body">
+      <form (ngSubmit)="onSubmit()" #clientForm="ngForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" [(ngModel)]="client.name" class="form-control" id="name" name="name" placeholder="Enter client's name"
+            required #name="ngModel">
+        </div>
+        <div [hidden]="!name.pristine" class="alert alert-danger">Name is required</div>
+        <div class="form-group">
+          <label for="surname">Surname</label>
+          <input type="text" [(ngModel)]="client.surname" class="form-control" id="surname" name="surname" placeholder="Enter client's surname"
+            required #surname="ngModel">
+          <div [hidden]="!surname.pristine" class="alert alert-danger">Surname is required</div>
+        </div>
+        <div class="form-group">
+            <label for="surname">Passport Number</label>
+            <input type="text" [(ngModel)]="client.passportNr" class="form-control" id="passportNr" name="passportNr" placeholder="Enter client's passport number"
+              required #passportNr="ngModel">
+            <div [hidden]="!passportNr.pristine" class="alert alert-danger">Passport Number is required</div>
+          </div>
+        <button type="submit" [disabled]="!clientForm.form.valid" class="btn btn-info">Submit</button>
+      </form>
+    </div>
+  </div> -->
