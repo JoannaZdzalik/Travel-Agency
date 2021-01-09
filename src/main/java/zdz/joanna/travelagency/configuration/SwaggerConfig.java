@@ -17,7 +17,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @Configuration
 @EnableWebMvc
-//http://localhost:8080/travelagency/v2/api-docs 
+//http://localhost:8080/travelagency/v2/api-docs to get json
+//http://localhost:8080/travelagency/swagger-ui.html to get swagger UI
 public class SwaggerConfig extends WebMvcConfigurerAdapter{
 	
 	 @Bean
