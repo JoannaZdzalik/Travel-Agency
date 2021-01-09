@@ -18,21 +18,24 @@ export class ClientService {
     return this.http.get(this.getUrl);  
   }  
 
-  getData() {
-    return this.http.get(this.getUrl);
-  }
+  // getData() {
+  //   return this.http.get(this.getUrl);
+  // }
   
   createClient(client: ClientDto) {  
     return this.http.post(this.addUrl, client);  
-   // return this.http.post(`${this.baseUrl}`+'/addclient', client);  
   }  
 
   deleteClient(id: number): Observable<any> {  
     return this.http.delete(`${this.baseUrl}/deleteclient/${id}`, { responseType: 'text' });  
   } 
 
+  getClient(id: number): Observable<Object> {  
+    return this.http.get(`${this.baseUrl}/getById/${id}`);  
+  }
+
   updateClient(id: number, value: any): Observable<Object> {  
-    return this.http.post(`${this.baseUrl}/update-student/${id}`, value);  
+    return this.http.post(`${this.baseUrl}/updateclient/${id}`, value);  
   }  
 
 

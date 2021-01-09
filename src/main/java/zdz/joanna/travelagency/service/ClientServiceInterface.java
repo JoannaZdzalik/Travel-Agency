@@ -16,5 +16,5 @@ public interface ClientServiceInterface {
 
 	public boolean update(ClientDto client);
 
-	public Optional<Client> getById(Long id);
+	public ClientDto getById(Long id);
 }

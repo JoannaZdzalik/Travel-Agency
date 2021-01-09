@@ -26,7 +26,7 @@ public class ClientService implements ClientServiceInterface {
 		if(clientDto == null) {
 			return "Bad request - client not specified";
 		}
-		if(!isPassportNrValid(clientDto)) {
+		else if(!isPassportNrValid(clientDto)) {
 			return "This passport number already exists in db!";
 		}else if (clientDto.getName()== null || clientDto.getName().length()<2) {
 			return "Bad request - name not specified";
@@ -35,18 +35,18 @@ public class ClientService implements ClientServiceInterface {
 			return "Bad request - surname not specified";
 		}
 		else if (clientDto.getPassportNr()== null || clientDto.getPassportNr().length()<6) {
-			return "Bad request - passpoerNr not specified";
+			return "Bad request - passportNr not specified";
 		}
-		else if (isValid(clientDto)) {
+		else if (isValid(clientDto)&& isPassportNrValid(clientDto)) {
 			Client client = mapper.map(clientDto, Client.class);
 			try {
 				clientRepository.save(client);
 			} catch (Exception e) {
-				return "Something went wrong!";
+				return "Something wenthj wrong!";
 			}
 			return "Client added sucessfully";
 		}
-		return "Something went wrong";
+			return "Something went soooo wrong";
 	}
 
 	public List<ClientDto> getAllClients() {
@@ -72,7 +72,6 @@ public class ClientService implements ClientServiceInterface {
 		try {
 			passportNrExists(clientDto);
 		} catch (IllegalArgumentException e) {
-			
 			return false;
 		}
 		return true;
@@ -91,8 +90,11 @@ public class ClientService implements ClientServiceInterface {
 		return clientRepository.countByPassportNr(clientDto.getPassportNr()) > 0;
 	}
 	
-	public Optional<Client> getById(Long id){
-		return clientRepository.findById(id);
+	public ClientDto getById(Long id){
+		Optional<Client> cl = clientRepository.findById(id);
+		ClientDto cldto = new ClientDto(cl.get().getId(), cl.get().getName(), cl.get().getSurname(), cl.get().getPassportNr());
+		return cldto;
+		
 	}
 	
 	public boolean update(ClientDto clientDto) {

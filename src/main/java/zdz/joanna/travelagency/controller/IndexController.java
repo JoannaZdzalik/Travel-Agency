@@ -1,6 +1,7 @@
 package zdz.joanna.travelagency.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,12 +11,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import zdz.joanna.travelagency.service.ClientService;
 import zdz.joanna.travelagency.dto.ClientDto;
+import zdz.joanna.travelagency.model.Client;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -28,6 +31,11 @@ public class IndexController {
     public List<ClientDto> getAllClients() {
         return clientService.getAllClients();
     }
+    
+	@RequestMapping("/getById/{id}")
+	public ClientDto getOne(@PathVariable("id") Long id) { 
+		return clientService.getById(id);
+	}
     
 	
     @PostMapping("/addclient")
@@ -48,7 +56,7 @@ public class IndexController {
         }
     } 
     
-    @PostMapping("updateclient/{id}")  
+    @PutMapping("updateclient/{id}")  
     public boolean updateClient(@RequestBody ClientDto client,@PathVariable("id") Long id) {  
     	client.setId(id);
     	return clientService.update(client);
