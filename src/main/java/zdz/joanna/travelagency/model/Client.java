@@ -34,6 +34,16 @@ public class Client implements Serializable {
 		this.passportNr = passportNr;
 	}
 
+	public Client(Long id, String name, String surname, String passportNr) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.passportNr = passportNr;
+	}
+
+
+
 	public Long getId() {
 		return id;
 	}

@@ -23,30 +23,27 @@ public class ClientService implements ClientServiceInterface {
 	private ClientRepository clientRepository;
 
 	public String addClient(ClientDto clientDto) {
-		if(clientDto == null) {
+		if (clientDto == null) {
 			return "Bad request - client not specified";
-		}
-		else if(!isPassportNrValid(clientDto)) {
+		} else if (!isPassportNrValid(clientDto)) {
 			return "This passport number already exists in db!";
-		}else if (clientDto.getName()== null || clientDto.getName().length()<2) {
-			return "Bad request - name not specified";
-		}
-		else if (clientDto.getSurname()== null || clientDto.getSurname().length()<2) {
-			return "Bad request - surname not specified";
-		}
-		else if (clientDto.getPassportNr()== null || clientDto.getPassportNr().length()<6) {
-			return "Bad request - passportNr not specified";
-		}
-		else if (isValid(clientDto)&& isPassportNrValid(clientDto)) {
-			Client client = mapper.map(clientDto, Client.class);
+		} else if (clientDto.getName() == null || clientDto.getName().length() < 2) {
+			return "Bad request - name not specified or invalid";
+		} else if (clientDto.getSurname() == null || clientDto.getSurname().length() < 2) {
+			return "Bad request - surname not specified or invalid";
+		} else if (clientDto.getPassportNr() == null || clientDto.getPassportNr().length() < 6) {
+			return "Bad request - passportNr not specified or invalid";
+		} else if (isValid(clientDto) && isPassportNrValid(clientDto)) {
+			// Client client = mapper.map(clientDto, Client.class);
+			Client client = new Client(clientDto.getName(), clientDto.getSurname(), clientDto.getPassportNr());
 			try {
 				clientRepository.save(client);
 			} catch (Exception e) {
-				return "Something wenthj wrong!";
+				return "Something went wrong!";
 			}
 			return "Client added sucessfully";
 		}
-			return "Something went soooo wrong";
+		return "Something went soooo wrong and did not enter any loop :(";
 	}
 
 	public List<ClientDto> getAllClients() {
@@ -67,7 +64,6 @@ public class ClientService implements ClientServiceInterface {
 		return false;
 	}
 
-	
 	public boolean isPassportNrValid(ClientDto clientDto) {
 		try {
 			passportNrExists(clientDto);
@@ -76,35 +72,39 @@ public class ClientService implements ClientServiceInterface {
 		}
 		return true;
 	}
-	
+
 	public boolean isValid(ClientDto clientDto) {
-		return isPassportNrValid(clientDto) && clientDto.getName()!= null 
-				&& clientDto.getSurname()!= null 
-				&& clientDto.getPassportNr() !=null
-				&& clientDto.getName().length()>2
-				&& clientDto.getSurname().length()>2
-				&& clientDto.getPassportNr().length()>6;
+		return isPassportNrValid(clientDto) && clientDto.getName() != null && clientDto.getSurname() != null
+				&& clientDto.getPassportNr() != null && clientDto.getName().length() > 2
+				&& clientDto.getSurname().length() > 2 && clientDto.getPassportNr().length() > 6;
 	}
 
 	public boolean passportNrExists(ClientDto clientDto) {
 		return clientRepository.countByPassportNr(clientDto.getPassportNr()) > 0;
 	}
-	
-	public ClientDto getById(Long id){
-		Optional<Client> cl = clientRepository.findById(id);
-		ClientDto cldto = new ClientDto(cl.get().getId(), cl.get().getName(), cl.get().getSurname(), cl.get().getPassportNr());
-		return cldto;
-		
+
+	public ClientDto getById(Long id) {
+		try {
+			Optional<Client> cl = clientRepository.findById(id);
+			ClientDto cldto = new ClientDto(cl.get().getId(), cl.get().getName(), cl.get().getSurname(),
+					cl.get().getPassportNr());
+			return cldto;
+		} catch (Exception e) {
+			System.err.println("Catched exception on getting client by Id. Message: " + e.getMessage());
+		}
+		return null;
 	}
-	
+
 	public boolean update(ClientDto clientDto) {
-			try {
-				Client client = mapper.map(clientDto, Client.class);
-				clientRepository.save(client);
-			} catch (Exception e) {
-				return false;
-			}
-			return true;
+		try {
+			// Client client = mapper.map(clientDto, Client.class);
+			Client client = new Client(clientDto.getId(), clientDto.getName(), clientDto.getSurname(),
+					clientDto.getPassportNr());
+			clientRepository.save(client);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 }

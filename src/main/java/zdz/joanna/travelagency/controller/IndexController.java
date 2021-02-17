@@ -3,6 +3,8 @@ package zdz.joanna.travelagency.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +35,14 @@ public class IndexController {
     }
     
 	@RequestMapping("/getById/{id}")
-	public ClientDto getOne(@PathVariable("id") Long id) { 
-		return clientService.getById(id);
+	public ClientDto getOne(@PathVariable("id") Long id, HttpServletResponse response) { 
+		ClientDto cl = clientService.getById(id);
+		if (cl != null) {
+			response.setStatus(200);
+		} else {
+			 response.setStatus(404);
+		}
+		return cl;
 	}
     
 	
@@ -42,6 +50,7 @@ public class IndexController {
     public ResponseEntity<String> addClient(@RequestBody ClientDto client) {
         String status = clientService.addClient(client);
         boolean valid = clientService.isValid(client);
+        System.err.println("Kurde to valid czy nie????? " + valid);
         return valid ? ResponseEntity.ok().body(status) : ResponseEntity.badRequest().body(status);
     }
     
